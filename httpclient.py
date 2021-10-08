@@ -126,7 +126,10 @@ class HTTPClient(object):
         host, port, path = result[0], result[1], result[2]
         
         # connect to server
-        socket = self.connect(host, port)
+        if port:
+            socket = self.connect(host, port)
+        else:
+            socket = self.connect(host, 80)
         
         request_body = ""
         request_body += "GET /" + path + " HTTP/1.1\r\n"
