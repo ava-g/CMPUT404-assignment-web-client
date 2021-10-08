@@ -257,13 +257,13 @@ class TestHTTPClient(unittest.TestCase):
             self.assertTrue(args[key] == outargs[key][0], "Key [%s] not found" % key)
 
 
-@classmethod
-def tearDownClass(self):        
-    if (TestHTTPClient.httpd!=None):
-        print("HTTP Shutdown in tearDown\n")
-        TestHTTPClient.httpd.shutdown()
-        TestHTTPClient.httpd.server_close()
-        time.sleep(1)
+    @classmethod
+    def tearDownClass(self):        
+        if (TestHTTPClient.httpd!=None):
+            print("HTTP Shutdown in tearDown\n")
+            TestHTTPClient.httpd.shutdown()
+            TestHTTPClient.httpd.server_close()
+            time.sleep(1)
 
 def test_test_webserver():
     print("http://%s:%d/dsadsadsadsa\n" % (BASEHOST,BASEPORT) )

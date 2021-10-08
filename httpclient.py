@@ -143,6 +143,8 @@ class HTTPClient(object):
         # receive response from server
         data = self.recvall(socket)
 
+        self.close()  # close connect!
+
         code = self.get_code(data)
         headers = self.get_headers(data)
         response_body = self.get_body(data)
@@ -167,8 +169,10 @@ class HTTPClient(object):
         request_body += "POST /" + path + " HTTP/1.1\r\n"
         request_body += "Host: " + host + "\r\n"
         request_body += "Content-Length: " + str(len(content)) + "\r\n"
-        request_body += "Content-Type: application/x-www-form-urlencoded\r\n\r\n"
+        request_body += "Content-Type: application/x-www-form-urlencoded\r\n"
+        request_body += "Connection: close\r\n\r\n"
         request_body += content  # post content body
+        request_body += "\r\n\r\n"
 
         # send post request to server
         self.sendall(request_body)
@@ -176,7 +180,8 @@ class HTTPClient(object):
         # receive response from server
         data = self.recvall(socket)
 
-        #code = 404
+        self.close()
+
         code = self.get_code(data)
         headers = self.get_headers(data)
         response_body = self.get_body(data)
