@@ -162,7 +162,7 @@ class TestHTTPClient(unittest.TestCase):
         req = http.GET("http://%s:%d/49872398432" % (BASEHOST,BASEPORT) )
         self.assertTrue(req != None, "None Returned!")
         self.assertTrue(req.code == 404)
-
+    
     def test404POST(self):
         '''Test against 404 errors'''
         MyHTTPHandler.post = nothing_available
@@ -256,13 +256,14 @@ class TestHTTPClient(unittest.TestCase):
         for key in outargs:
             self.assertTrue(args[key] == outargs[key][0], "Key [%s] not found" % key)
 
-    @classmethod
-    def tearDownClass(self):        
-        if (TestHTTPClient.httpd!=None):
-            print("HTTP Shutdown in tearDown\n")
-            TestHTTPClient.httpd.shutdown()
-            TestHTTPClient.httpd.server_close()
-            time.sleep(1)
+
+@classmethod
+def tearDownClass(self):        
+    if (TestHTTPClient.httpd!=None):
+        print("HTTP Shutdown in tearDown\n")
+        TestHTTPClient.httpd.shutdown()
+        TestHTTPClient.httpd.server_close()
+        time.sleep(1)
 
 def test_test_webserver():
     print("http://%s:%d/dsadsadsadsa\n" % (BASEHOST,BASEPORT) )
